@@ -28,6 +28,7 @@ public class Employee {
     private String lastName;
 
     @Column(name="current_position")
+    @Enumerated(EnumType.STRING)
     private Positions position;
 
     //make it optional and unique

@@ -13,3 +13,5 @@ export const updateEmployee= (employeeId, employee) => axios.put(REST_API_BASE_U
 
 export const deleteEmployee= (employeeId) => axios.delete(REST_API_BASE_URL+ "/" + employeeId);
 
+export const getAllPositions= () => axios.get('http://localhost:8080/api/positions');
+

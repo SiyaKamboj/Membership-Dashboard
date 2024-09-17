@@ -3,6 +3,7 @@ package net.javaguides.ems.service.impl;
 import lombok.AllArgsConstructor;
 import net.javaguides.ems.dto.EmployeeDto;
 import net.javaguides.ems.entity.Employee;
+import net.javaguides.ems.enums.Positions;
 import net.javaguides.ems.exception.ResourceNotFoundException;
 import net.javaguides.ems.mapper.EmployeeMapper;
 import net.javaguides.ems.repository.EmployeeRepository;
@@ -53,10 +54,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setFirstName(updatedEmployee.getFirstName());
         employee.setLastName(updatedEmployee.getLastName());
         employee.setEmail(updatedEmployee.getEmail());
+        //employee.setPosition(updatedEmployee.getPosition());
+        //converts string display name ot enum and sets that in the backend
+        employee.setPosition(Positions.fromDisplayName(String.valueOf(updatedEmployee.getPosition())));
         //if contains id, perform update operation; else, perform insert operation
         Employee updatedEmployeeObject= employeeRepository.save(employee);
 
-        //need to convert updatedEmployeeObject to Dto
+        //need to convert updatedEmployeeObject to Dto aka to front-end
         return EmployeeMapper.mapToEmployeeDto(updatedEmployeeObject);
     }
 

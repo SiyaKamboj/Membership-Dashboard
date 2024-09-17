@@ -11,6 +11,7 @@ const ViewEmployee  = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+    const [position, setPosition] = useState('');
 
     const { id } = useParams();
     console.log(id);
@@ -21,6 +22,7 @@ const ViewEmployee  = () => {
                 setFirstName(response.data.firstName);
                 setLastName(response.data.lastName);
                 setEmail(response.data.email);
+                setPosition(response.data.position);
             }).catch(error => {
                 console.error(error);
             });
@@ -46,6 +48,7 @@ const ViewEmployee  = () => {
             <p>First Name: {firstName}</p>
             <p>Last Name: {lastName}</p>
             <p>Email: {email}</p>
+            <p>Position: {position}</p>
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { createEmployee, getEmployee, updateEmployee } from '../services/EmployeeService'
+import { createEmployee, getAllPositions, getEmployee, updateEmployee } from '../services/EmployeeService'
 //needed to navigate user from one site to another
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -8,11 +8,11 @@ const EmployeeComponent = () => {
     const [firstName, setFirstName]= useState('')
     const [lastName, setLastName]= useState('')
     const [email, setEmail]= useState('')
+    const [position, setPosition]= useState('') //hold position from backedn
+    const [positionsEnum, setPositionsEnum] = useState([]);  // Holds the positions fetched from backend
 
     
     const handleFirstName = (e) => setFirstName(e.target.value);
-    
-
     const handleLastName = (e) => setLastName(e.target.value);
     
 
@@ -21,7 +21,8 @@ const EmployeeComponent = () => {
     const [errors, setErrors] = useState({
         firstName: '',
         lastName: '',
-        email: ''
+        email: '',
+        position: ''
     })
     const navigator = useNavigate();
 
@@ -33,11 +34,22 @@ const EmployeeComponent = () => {
                 setFirstName(response.data.firstName);
                 setLastName(response.data.lastName);
                 setEmail(response.data.email);
+                setPosition(response.data.position);
             }).catch(error => {
                 console.error(error);
             })
         }
+
     }, [id])
+
+    // Fetch positions from the backend on component mount
+    useEffect(() => {
+        getAllPositions().then((response) => {
+            setPositionsEnum(['', ...response.data]);  // Set the fetched positions
+        }).catch(error => {
+            console.error('Error fetching positions:', error);
+        });
+    }, []);  // Runs once when the component mounts
 
     //should support both addand update employee methods
     function saveOrUpdateEmployee(e){
@@ -45,10 +57,11 @@ const EmployeeComponent = () => {
         e.preventDefault();
 
         if (validateForm()){
-            const employee={firstName, lastName, email}
+            const employee={firstName, lastName, email, position}
             console.log(employee)
 
             if(id){
+                //old employee so update it
                 updateEmployee(id, employee).then((response) => {
                     console.log(response.data);
                     navigator('/employees');
@@ -57,7 +70,7 @@ const EmployeeComponent = () => {
                 })
             }
             else{
-                //now actually save into sql database
+                //now actually save into sql database because new employee
                 createEmployee(employee).then(response => {
                     console.log(response.data);
                     //navigate to list all employees page
@@ -102,6 +115,15 @@ const EmployeeComponent = () => {
         }else{
             //this is validation error
             errorsCopy.email='Email is required';
+            valid=false;
+        }
+
+        if(position.trim()){
+            //no validation error
+            errorsCopy.position='';
+        }else{
+            //this is validation error
+            errorsCopy.position='Position is required';
             valid=false;
         }
 
@@ -174,6 +196,23 @@ const EmployeeComponent = () => {
                             >
                             </input>
                             { errors.email && <div className='invalid-feedback'> { errors.email }</div> }
+                        </div>
+
+                        <div className='form-group mb-2'>
+                            <label className='form-label'>Enter Employee Position:</label>
+                            <select
+                            id="position"
+                            className={`form-control ${ errors.position ? 'is-invalid': ''}`}
+                            value={position}
+                            onChange={(e) => setPosition(e.target.value)}
+                            >
+                                {positionsEnum.map((currposition) => (
+                                <option key={currposition} value={currposition}>
+                                    {currposition}
+                                </option>
+                            ))}
+                            </select>
+                            { errors.position && <div className='invalid-feedback'> { errors.position }</div> }
                         </div>
 
                         <button className='btn btn-success' onClick={saveOrUpdateEmployee}> Submit</button>
