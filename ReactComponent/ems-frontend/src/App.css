@@ -7,5 +7,36 @@
   background-color:black;
   text-align: center;
   color:white;
+}
 
+/* Style for the form container */
+.form-inline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Space between elements */
+  margin: 20px;
+  padding: 10px;
+}
+
+/* Optional: Style for the dropdowns */
+.inline-dropdown {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Optional: Style for the submit button */
+.inline-button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Add some spacing around the text to align well */
+.form-inline label {
+  margin-right: 5px;
 }

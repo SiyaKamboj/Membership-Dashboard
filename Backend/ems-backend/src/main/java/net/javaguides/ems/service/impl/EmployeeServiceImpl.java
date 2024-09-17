@@ -69,7 +69,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee= employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee does not exist with given id " + employeeId));
         employeeRepository.deleteById(employeeId);
+    }
 
+    @Override
+    public void updateEmployeePositions(String currentPosition, String newPosition) {
+        Positions currentEnumPosition = Positions.fromDisplayName(currentPosition); // Convert from display name to enum
+        Positions newEnumPosition = Positions.fromDisplayName(newPosition); // Convert from display name to enum
+
+        // Update all employees with the current position
+        List<Employee> employeesToUpdate = employeeRepository.findByPosition(currentEnumPosition);
+        employeesToUpdate.forEach(employee -> employee.setPosition(newEnumPosition));
+
+        // Save the updated employees
+        employeeRepository.saveAll(employeesToUpdate);
     }
 
 

@@ -35,16 +35,17 @@ public enum Positions {
     public static Positions fromDisplayName(String displayName) {
         for (Positions position : Positions.values()) {
             if (position.getDisplayName().equalsIgnoreCase(displayName)) {
+                System.out.println("returning "+ position);
                 return position;
             }
         }
         throw new IllegalArgumentException("No enum constant for display name: " + displayName);
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return displayName;
-    }
+    }*/
 }
 
 

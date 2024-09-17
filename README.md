@@ -12,6 +12,17 @@ It was built using Java, Springboot, SQL, and React.JS.
 * npm run dev
 Now, the project should be available on localhost:3000/employees. Note, there is no need to run mysql in the background; however, if you do want to, open terminal -> mysql -u root
 
+## Version 3 (Current Version)
+### Pros
+* Added the ability to "mass-change" all members of position x to position y
+### Cons
+* The "view employee" page has poor UI/UX design
+### Future Work
+* Add in a column for what the member's specialty is (ie DP, Directing, Editing, etc) & allow users to filter by specialty
+* Include another table for projects, and link the projects into the user's table
+* Create user accounts to ensure only admin can alter users, but anyone can view projects/users
+* Deploy this on AWS for public consumption
+
 ## Version 2
 ### Pros
 * Added in role information for each user

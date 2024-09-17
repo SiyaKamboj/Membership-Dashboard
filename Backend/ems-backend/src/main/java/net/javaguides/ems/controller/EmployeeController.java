@@ -56,4 +56,11 @@ public class EmployeeController {
         employeeService.deleteEmployee(employeeId);
         return ResponseEntity.ok("Employee deleted successfully");
     }
+
+    //mass update all employees in currentPosition to newPosition
+    @PutMapping("/update-positions")
+    public ResponseEntity<String> updateEmployeePositions(@RequestParam String currentPosition, @RequestParam String newPosition) {
+        employeeService.updateEmployeePositions(currentPosition, newPosition);
+        return ResponseEntity.ok("Employees' positions updated successfully.");
+    }
 }

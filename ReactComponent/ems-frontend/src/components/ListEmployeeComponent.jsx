@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react'
-import { deleteEmployee, getAllPositions,listEmployees } from '../services/EmployeeService'
+import { deleteEmployee, getAllPositions,listEmployees, updatePositions } from '../services/EmployeeService'
 import {useNavigate} from 'react-router-dom'
 
 const ListEmployeeComponent = () => {
     const [employees, setEmployees]=useState([])
     const [filterPosition, setFilterPosition] = useState(''); // State for the selected filter position
     const [positionsEnum, setPositionsEnum] = useState([]); // State to hold the positions retrieved from the backend
-
+    const [newPosition, setNewPosition] = useState(''); 
+    const [isSecondDropdownEnabled, setIsSecondDropdownEnabled] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
     const navigator = useNavigate();
 
     // Fetch positions dynamically from the backend
@@ -54,6 +56,43 @@ const ListEmployeeComponent = () => {
         })
     }
 
+    // Function to handle first dropdown change
+    const handleFirstDropdownChange = (e) => {
+        const filterPosition = e.target.value;
+        setFilterPosition(filterPosition);
+
+        // Enable the second dropdown and filter employees
+        if (filterPosition) {
+            setIsSecondDropdownEnabled(true);
+            // Can do API call or logic to filter employees based on the selected position, but it is automated already
+        } else {
+            setIsSecondDropdownEnabled(false);
+        }
+    };
+
+    const handleUpdate = (e) => {
+        e.preventDefault();
+
+        // Validate that both dropdowns have a selection
+        if (!filterPosition || !newPosition) {
+            alert("Please select both positions.");
+            return;
+        }
+
+        // Confirmation dialog
+        if (window.confirm(`Are you sure you want to change all ${filterPosition} to ${newPosition}?`)) {
+            // Call the API to update the positions
+            //have not implemented updatePositions yet
+            updatePositions(filterPosition, newPosition)
+                .then((response) => {
+                    setSuccessMessage(`Successfully updated all ${filterPosition} to ${newPosition}. Please refresh the page.`);
+                })
+                .catch(error => {
+                    console.error('Error updating positions:', error);
+                });
+        }
+    }
+
     const filteredEmployees = filterPosition
         ? employees.filter(employee => employee.position === filterPosition)
         : employees;
@@ -62,10 +101,12 @@ const ListEmployeeComponent = () => {
     <div className='container'>
         <h2 style={{marginTop: '15px'}}className='text-center'>List of Employees</h2>
 
-        <br /> <br />
+        <br /> 
+        {/* 
+            //this is for just filtering data; not mass-changing data
             <div className="row">
                 <div className="col-md-6 offset-md-3">
-                    {/* Dropdown to select the position filter */}
+                    //dropdown to select filter
                     <div className="form-group">
                         <label>Filter by Position:</label>
                         <select
@@ -73,7 +114,7 @@ const ListEmployeeComponent = () => {
                             value={filterPosition}
                             onChange={(e) => setFilterPosition(e.target.value)}
                         >
-                            <option value="">All</option> {/* Option to show all employees */}
+                            <option value="">All</option> //option to show all employees
                             {positionsEnum.map(currposition => (
                                 <option key={currposition} value={currposition}>
                                     {currposition}
@@ -83,7 +124,53 @@ const ListEmployeeComponent = () => {
                     </div>
                 </div>
             </div>
-        <br /> <br />
+            */}
+        <div className="form-container">
+            <form onSubmit={handleUpdate} className="form-inline">
+                <label htmlFor="selectAll">Select all:</label>
+                <select id="selectAll"
+                    className='inline-dropdown'
+                    value={filterPosition}
+                    onChange={handleFirstDropdownChange}
+                >
+                    <option value=''>-- Select Current Position --</option>
+                    {positionsEnum.map(position => (
+                        <option key={position} value={position}>
+                            {position}
+                        </option>
+                    ))}
+                </select>
+            
+            
+                <label htmlFor="changeTo">Change to:</label>
+                <select id="changeTo"
+                    className='inline-dropdown'
+                    value={newPosition}
+                    onChange={(e) => setNewPosition(e.target.value)}
+                    disabled={!isSecondDropdownEnabled} // Disable until the first dropdown is selected
+                >
+                    <option value=''>-- Select New Position --</option>
+                    {positionsEnum.map(position => (
+                        <option key={position} value={position}>
+                            {position}
+                        </option>
+                    ))}
+                </select>
+            
+        
+
+            <button
+                type='submit'
+                className='inline-button'
+                disabled={!isSecondDropdownEnabled} // Disable button until the first dropdown is selected
+            >
+                Update Positions
+            </button>
+        </form>
+        </div>
+
+    {successMessage && <div className='alert alert-success mt-3'>{successMessage}</div>}
+        <br /> 
 
         <table className='table table-striped table-bordered'>
             <thead>
