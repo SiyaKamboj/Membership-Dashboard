@@ -2,6 +2,16 @@
 This is a full-stack project that tracks the members/employees of TTV, UCSD's film studio.
 It was built using Java, Springboot, SQL, and React.JS. 
 
+## How to Run the Project on your Local Device
+### Run the Backend
+* Open "ems-backend" on IntelliJ. If needed, regenerate Maven scripts.
+* Run the executable file : EmsBackendApplication
+### Run front-end on VSCode
+* cd ems-frontend
+* npm install
+* npm run dev
+Now, the project should be available on localhost:3000/employees. Note, there is no need to run mysql in the background; however, if you do want to, open terminal -> mysql -u root
+
 ## Version 2
 ### Pros
 * Added in role information for each user
