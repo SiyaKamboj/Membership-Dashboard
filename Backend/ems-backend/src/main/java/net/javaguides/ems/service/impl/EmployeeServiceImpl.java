@@ -57,6 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         //employee.setPosition(updatedEmployee.getPosition());
         //converts string display name ot enum and sets that in the backend
         employee.setPosition(Positions.fromDisplayName(String.valueOf(updatedEmployee.getPosition())));
+        employee.setMajor(updatedEmployee.getMajor());
         //if contains id, perform update operation; else, perform insert operation
         Employee updatedEmployeeObject= employeeRepository.save(employee);
 

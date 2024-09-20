@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getEmployee } from '../services/EmployeeService';
+import { getEmployee } from '../../services/EmployeeService';
 import {useNavigate} from 'react-router-dom'
 
 const ViewEmployee  = () => {
@@ -12,6 +12,7 @@ const ViewEmployee  = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [position, setPosition] = useState('');
+    const [major, setMajor] = useState('');
 
     const { id } = useParams();
     console.log(id);
@@ -23,6 +24,7 @@ const ViewEmployee  = () => {
                 setLastName(response.data.lastName);
                 setEmail(response.data.email);
                 setPosition(response.data.position);
+                setMajor(response.data.major);
             }).catch(error => {
                 console.error(error);
             });
@@ -39,16 +41,22 @@ const ViewEmployee  = () => {
     }
 
     return (
-        <div>
-            <br/>
-            <button className="btn btn-dark" onClick={allEmployee} style={{marginBottom: '15px'}}> See all employees</button>
-            <button className='btn btn-info' onClick={() => updateEmployee(id)} style={{marginBottom: '15px', marginLeft: '15px'}}> Update this employee</button>
-            <h1>Employee Details</h1>
-            <p>Id: {id}</p>
-            <p>First Name: {firstName}</p>
-            <p>Last Name: {lastName}</p>
-            <p>Email: {email}</p>
-            <p>Position: {position}</p>
+        <div className="member-details-container">
+            <div className="button-group">
+                <button className="btn btn-dark" onClick={allEmployee}>See all members</button>
+                <button className="btn btn-info" onClick={() => updateEmployee(id)}>Update this member</button>
+            </div>
+            
+            <div className="card member-card">
+                <h1 className="card-title">Member Details</h1>
+                <div className="card-body">
+                    <p><strong>First Name:</strong> {firstName}</p>
+                    <p><strong>Last Name:</strong> {lastName}</p>
+                    <p><strong>Email:</strong> {email}</p>
+                    <p><strong>Position:</strong> {position}</p>
+                    <p><strong>Major:</strong> {major}</p>
+                </div>
+            </div>
         </div>
     );
 };

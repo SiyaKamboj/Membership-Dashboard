@@ -10,9 +10,23 @@ It was built using Java, Springboot, SQL, and React.JS.
 * cd ems-frontend
 * npm install
 * npm run dev
+
 Now, the project should be available on localhost:3000/employees. Note, there is no need to run mysql in the background; however, if you do want to, open terminal -> mysql -u root
 
-## Version 3 (Current Version)
+## Version 4 (Current Version)
+### Pros
+* Added a new tab for projects, that is currently completely separate from the member's table. The projects table contains title, type (which is either AS, Club Collab, Sanctioned Narrative, Unsanctioned Narrative, or other), and description. 
+* Improved UI/UX Design of "view employee" and "view project"
+### Cons
+* The color scheme for both projects and members is the same, which might be confusing
+* Improve the aesthetics of the nav bar
+### Future Work
+* Create new table called projectEmployee where one column links to a project, one column links to member, and one column is an ENUM of role on set (ie Director, DP, AD, etc)
+* Add in a column for what the member's specialty is (ie DP, Directing, Editing, etc) & allow users to filter by specialty
+* Create user accounts to ensure only admin can alter users, but anyone can view projects/users
+* Deploy this on AWS for public consumption
+
+## Version 3
 ### Pros
 * Added the ability to "mass-change" all members of position x to position y
 ### Cons

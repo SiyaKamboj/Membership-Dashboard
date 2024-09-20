@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { createEmployee, getAllPositions, getEmployee, updateEmployee } from '../services/EmployeeService'
+import { createEmployee, getAllMajors, getAllPositions, getEmployee, updateEmployee } from '../../services/EmployeeService'
 //needed to navigate user from one site to another
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -10,6 +10,8 @@ const EmployeeComponent = () => {
     const [email, setEmail]= useState('')
     const [position, setPosition]= useState('') //hold position from backedn
     const [positionsEnum, setPositionsEnum] = useState([]);  // Holds the positions fetched from backend
+    const [major, setMajor]= useState('') //hold position from backedn
+    const [majorsEnum, setMajorsEnum] = useState([]);
 
     
     const handleFirstName = (e) => setFirstName(e.target.value);
@@ -22,7 +24,8 @@ const EmployeeComponent = () => {
         firstName: '',
         lastName: '',
         email: '',
-        position: ''
+        position: '',
+        major: ''
     })
     const navigator = useNavigate();
 
@@ -35,6 +38,7 @@ const EmployeeComponent = () => {
                 setLastName(response.data.lastName);
                 setEmail(response.data.email);
                 setPosition(response.data.position);
+                setMajor(response.data.major);
             }).catch(error => {
                 console.error(error);
             })
@@ -51,13 +55,23 @@ const EmployeeComponent = () => {
         });
     }, []);  // Runs once when the component mounts
 
+    // Fetch positions from the backend on component mount
+    useEffect(() => {
+        getAllMajors().then((response) => {
+            setMajorsEnum(['', ...response.data]);  // Set the fetched positions
+        }).catch(error => {
+            console.error('Error fetching majors:', error);
+        });
+    }, []);  // Runs once when the component mounts
+
+
     //should support both addand update employee methods
     function saveOrUpdateEmployee(e){
         //prevent default activities that happen when submitting form
         e.preventDefault();
 
         if (validateForm()){
-            const employee={firstName, lastName, email, position}
+            const employee={firstName, lastName, email, position, major}
             console.log(employee)
 
             if(id){
@@ -127,6 +141,15 @@ const EmployeeComponent = () => {
             valid=false;
         }
 
+        if(major.trim()){
+            //no validation error
+            errorsCopy.major='';
+        }else{
+            //this is validation error
+            errorsCopy.major='Major is required';
+            valid=false;
+        }
+
         setErrors(errorsCopy);
         return valid;
 
@@ -135,9 +158,9 @@ const EmployeeComponent = () => {
 
     function pageTitle(){
         if (id){
-            return <h2 className='text-center'>Update Employee</h2>
+            return <h2 className='text-center'>Update Member</h2>
         }else{
-            return <h2 className='text-center'>Add Employee</h2>
+            return <h2 className='text-center'>Add Member</h2>
         }
     }
 
@@ -199,7 +222,7 @@ const EmployeeComponent = () => {
                         </div>
 
                         <div className='form-group mb-2'>
-                            <label className='form-label'>Enter Employee Position:</label>
+                            <label className='form-label'>Enter Member's Position:</label>
                             <select
                             id="position"
                             className={`form-control ${ errors.position ? 'is-invalid': ''}`}
@@ -213,6 +236,23 @@ const EmployeeComponent = () => {
                             ))}
                             </select>
                             { errors.position && <div className='invalid-feedback'> { errors.position }</div> }
+                        </div>
+
+                        <div className='form-group mb-2'>
+                            <label className='form-label'>Enter Member's Major:</label>
+                            <select
+                            id="major"
+                            className={`form-control ${ errors.major ? 'is-invalid': ''}`}
+                            value={major ? major : ''}
+                            onChange={(e) => setMajor(e.target.value)}
+                            >
+                                {majorsEnum.map((currmajor) => (
+                                <option key={currmajor} value={currmajor}>
+                                    {currmajor}
+                                </option>
+                            ))}
+                            </select>
+                            { errors.major && <div className='invalid-feedback'> { errors.major }</div> }
                         </div>
 
                         <button className='btn btn-success' onClick={saveOrUpdateEmployee}> Submit</button>

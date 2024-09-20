@@ -40,3 +40,45 @@
 .form-inline label {
   margin-right: 5px;
 }
+
+
+/*Styling for view one employee page*/
+.member-details-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.button-group {
+  margin-bottom: 20px;
+}
+
+.button-group .btn {
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+.member-card {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #343a40;
+}
+
+.card-body p {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.card-body p strong {
+  font-weight: bold;
+}
+

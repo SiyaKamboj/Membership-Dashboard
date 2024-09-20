@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { deleteEmployee, getAllPositions,listEmployees, updatePositions } from '../services/EmployeeService'
+import { deleteEmployee, getAllPositions,listEmployees, updatePositions } from '../../services/EmployeeService'
 import {useNavigate} from 'react-router-dom'
 
 const ListEmployeeComponent = () => {
@@ -85,7 +85,8 @@ const ListEmployeeComponent = () => {
             //have not implemented updatePositions yet
             updatePositions(filterPosition, newPosition)
                 .then((response) => {
-                    setSuccessMessage(`Successfully updated all ${filterPosition} to ${newPosition}. Please refresh the page.`);
+                    setSuccessMessage(`Successfully updated all ${filterPosition} to ${newPosition}. Please refresh the page to get rid of this message`);
+                    getAllEmployees();
                 })
                 .catch(error => {
                     console.error('Error updating positions:', error);
@@ -99,7 +100,7 @@ const ListEmployeeComponent = () => {
 
   return (
     <div className='container'>
-        <h2 style={{marginTop: '15px'}}className='text-center'>List of Employees</h2>
+        <h2 style={{marginTop: '15px'}}className='text-center'>List of TTV Members</h2>
 
         <br /> 
         {/* 
@@ -176,9 +177,8 @@ const ListEmployeeComponent = () => {
             <thead>
                 <tr>
                     
-                    <th>Employee First Name</th>
-                    <th>Employee Last Name</th>
-                    <th>Employee Position</th>
+                    <th>Name</th>
+                    <th>Position</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -191,8 +191,7 @@ const ListEmployeeComponent = () => {
                     .map(employee =>
                         <tr key={employee.id}>
                             
-                            <td>{employee.firstName}</td>
-                            <td>{employee.lastName}</td>
+                            <td>{employee.firstName + ' '+ employee.lastName}</td>
                             <td>{employee.position}</td>
                        
                             <td>
@@ -207,7 +206,7 @@ const ListEmployeeComponent = () => {
                 
             </tbody>
         </table>
-        <button className='btn btn-primary' onClick={addNewEmployee} style={{marginBottom: '70px'}}> Add Employee</button>
+        <button className='btn btn-primary' onClick={addNewEmployee} style={{marginBottom: '70px'}}> Add Member</button>
     </div>
   )
 }
