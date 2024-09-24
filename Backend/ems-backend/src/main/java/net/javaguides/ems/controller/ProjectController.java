@@ -2,12 +2,15 @@ package net.javaguides.ems.controller;
 
 import lombok.AllArgsConstructor;
 import net.javaguides.ems.dto.ProjectDTO;
+import net.javaguides.ems.dto.ProjectEmployeeDto;
+import net.javaguides.ems.service.ProjectEmployeeService;
 import net.javaguides.ems.service.ProjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 //makes this class capable of handling HTTP request. This serves data through REST api
 @CrossOrigin("*") //ensures no CORS issues when trying to get data through react app
@@ -15,8 +18,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
-    //WORK ON THIS NEXT
     private ProjectService projectService;
+    private ProjectEmployeeService projectEmployeeService;
 
     @PostMapping
     public ResponseEntity<ProjectDTO> createProjects(@RequestBody ProjectDTO projectDto){
@@ -46,6 +49,21 @@ public class ProjectController {
     public ResponseEntity<String> deleteProjects(@PathVariable("id") long projectId){
         projectService.deleteProject(projectId);
         return ResponseEntity.ok("Employee deleted successfully");
+    }
+
+    //for removing existing members and roles & adding new members and role into projectEmployee table
+    @PutMapping("/update-members/{projectId}")
+    public ResponseEntity<Void> updateProjectMembers(
+            @PathVariable Long projectId,
+            @RequestBody List<ProjectEmployeeDto> projectMembers) {
+        projectEmployeeService.updateProjectMembers(projectId, projectMembers);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/all-members/{id}")
+    public ResponseEntity<List<Map<String, Object>>> getMembersAndRoles(@PathVariable("id") long projectId){
+        List<Map<String, Object>> allMembersAndRoles= projectService.retrieveAllMembersAndCorrespRoles(projectId);
+        return ResponseEntity.ok(allMembersAndRoles);
     }
 
 }

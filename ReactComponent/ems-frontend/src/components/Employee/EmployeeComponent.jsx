@@ -179,7 +179,7 @@ const EmployeeComponent = () => {
                             <label className='form-label'>First Name</label>
                             <input
                                 type='text'
-                                placeholder='Enter Employee First Name'
+                                placeholder='Enter Member First Name'
                                 name='firstName'
                                 value={firstName}
                                 //add multiple css classes using {``}
@@ -196,7 +196,7 @@ const EmployeeComponent = () => {
                             <label className='form-label'>Last Name</label>
                             <input
                                 type='text'
-                                placeholder='Enter Employee Last Name'
+                                placeholder='Enter Member Last Name'
                                 name='lastName'
                                 value={lastName}
                                 className={`form-control ${ errors.lastName? 'is-invalid': ''}`}
@@ -211,7 +211,7 @@ const EmployeeComponent = () => {
                             <label className='form-label'>Email</label>
                             <input
                                 type='text'
-                                placeholder='Enter Employee Email'
+                                placeholder='Enter Member Email'
                                 name='email'
                                 value={email}
                                 className={`form-control ${ errors.email ? 'is-invalid': ''}`}
@@ -255,7 +255,7 @@ const EmployeeComponent = () => {
                             { errors.major && <div className='invalid-feedback'> { errors.major }</div> }
                         </div>
 
-                        <button className='btn btn-success' onClick={saveOrUpdateEmployee}> Submit</button>
+                        <button className='btn btn-success' style={{marginBottom: '70px'}} onClick={saveOrUpdateEmployee}> Submit</button>
                     </form>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 package net.javaguides.ems.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import net.javaguides.ems.dto.ProjectDTO;
 import net.javaguides.ems.entity.Project;
@@ -9,7 +10,10 @@ import net.javaguides.ems.repository.ProjectRepository;
 import net.javaguides.ems.service.ProjectService;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -58,11 +62,31 @@ public class ProjectServiceImpl implements ProjectService {
         return ProjectMapper.mapToProjectDto(updatedProjectObject);
     }
 
+    @Transactional
     @Override
     public void deleteProject(long projectId) {
         Project project= projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Project does not exist with given id " + projectId));
+        //delete all instances of project in projectemployees table
+        projectRepository.deleteAllProjectEmployees(projectId);
+        //delete the project itself from projects table
         projectRepository.deleteById(projectId);
+    }
+
+    @Override
+    public List<Map<String, Object>> retrieveAllMembersAndCorrespRoles(Long projectId) {
+        List<Object[]> results =projectRepository.findMemberRolesByProjectId(projectId);
+        // Map each result to a more readable structure
+        return results.stream()
+                .map(result -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("memberid", result[0]);
+                    map.put("firstname", result[1]);
+                    map.put("lastname", result[2]);
+                    map.put("role", result[3]);
+                    return map;
+                })
+                .collect(Collectors.toList());
     }
 
 }

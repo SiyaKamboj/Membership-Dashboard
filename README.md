@@ -13,7 +13,22 @@ It was built using Java, Springboot, SQL, and React.JS.
 
 Now, the project should be available on localhost:3000/employees. Note, there is no need to run mysql in the background; however, if you do want to, open terminal -> mysql -u root
 
-## Version 4 (Current Version)
+## Version 5 (Current Version)
+### Pros
+* Created new table called projectEmployee where one column links to a project, one column links to member, and one column is an ENUM of role on set (ie Director, DP, AD, etc).
+- If you navigate to "view a user", then there is a list of projects that the user has worked on and the user's corresponding role/position on it.
+- If you navigate to "add/edit a project", then you can edit the members involved and their role.
+- If you delete a specific project and/or member, then all traces of that project and/or member are moved from the projectemployee table in the database
+* This is the version that is currently going to be deployed on AWS
+### Cons
+* The color scheme for both projects and members is the same, which might be confusing
+* Improve the aesthetics of the nav bar
+### Future Work
+* Add in a column for what the member's specialty is (ie DP, Directing, Editing, etc) & allow users to filter by specialty (generally, allow users to filter by different categories rather than just position)
+* Create user accounts to ensure only admin can alter users, but anyone can view projects/users
+* Deploy this on AWS for public consumption
+
+## Version 4
 ### Pros
 * Added a new tab for projects, that is currently completely separate from the member's table. The projects table contains title, type (which is either AS, Club Collab, Sanctioned Narrative, Unsanctioned Narrative, or other), and description. 
 * Improved UI/UX Design of "view employee" and "view project"

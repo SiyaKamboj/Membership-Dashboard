@@ -1,7 +1,8 @@
 import axios from "axios";
 
+const SERVER_URL = 'http://localhost:8080';
 //this is the connection to the link for the springboot app. Each of these links must correspond to a mapping in the springboot/java application
-const REST_API_BASE_URL = 'http://localhost:8080/api/employees';
+const REST_API_BASE_URL = SERVER_URL+'/api/employees';
 
 export const listEmployees = () => axios.get(REST_API_BASE_URL);
 
@@ -13,10 +14,12 @@ export const updateEmployee= (employeeId, employee) => axios.put(REST_API_BASE_U
 
 export const deleteEmployee= (employeeId) => axios.delete(REST_API_BASE_URL+ "/" + employeeId);
 
-export const getAllPositions= () => axios.get('http://localhost:8080/api/positions');
+export const getAllPositions= () => axios.get(SERVER_URL+'/api/positions');
 
-export const getAllMajors= () => axios.get('http://localhost:8080/api/majors');
+export const getAllMajors= () => axios.get(SERVER_URL+'/api/majors');
 
 export const updatePositions= (currentPosition, newPosition) => axios.put(REST_API_BASE_URL+"/update-positions?currentPosition=" + currentPosition + "&newPosition=" + newPosition);
+
+export const getAllMemberExperience= (employeeId) => axios.get(REST_API_BASE_URL + "/all-projects/"+ employeeId);
 
 

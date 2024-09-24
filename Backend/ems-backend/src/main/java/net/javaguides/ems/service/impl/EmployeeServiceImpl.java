@@ -1,5 +1,6 @@
 package net.javaguides.ems.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import net.javaguides.ems.dto.EmployeeDto;
 import net.javaguides.ems.entity.Employee;
@@ -10,7 +11,9 @@ import net.javaguides.ems.repository.EmployeeRepository;
 import net.javaguides.ems.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 //tells spring to create bean for EmployeeServiceImpl class
@@ -65,10 +68,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         return EmployeeMapper.mapToEmployeeDto(updatedEmployeeObject);
     }
 
+    @Transactional
     @Override
     public void deleteEmployee(long employeeId) {
         Employee employee= employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee does not exist with given id " + employeeId));
+        //delete all instances of member in projectemployees table
+        employeeRepository.deleteAllProjectEmployees(employeeId);
+        //delete references of employeeRepository everywhere
         employeeRepository.deleteById(employeeId);
     }
 
@@ -83,6 +90,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         // Save the updated employees
         employeeRepository.saveAll(employeesToUpdate);
+    }
+    
+    //get the current member's all projects worked on and their role on that project
+    public List<Map<String, Object>> retrieveAllProjectsAndCorrespRoles(Long memberId){
+        List<Object[]> results =employeeRepository.findProjectRolesByMemberId(memberId);
+        // Map each result to a more readable structure
+        return results.stream()
+                .map(result -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("projectName", result[0]);
+                    map.put("role", result[1]);
+                    return map;
+                })
+                .collect(Collectors.toList());
     }
 
 

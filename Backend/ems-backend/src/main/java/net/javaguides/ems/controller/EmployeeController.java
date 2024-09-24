@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 //makes this class capable of handling HTTP request. This serves data through REST api
 @CrossOrigin("*") //ensures no CORS issues when trying to get data through react app
@@ -62,5 +63,13 @@ public class EmployeeController {
     public ResponseEntity<String> updateEmployeePositions(@RequestParam String currentPosition, @RequestParam String newPosition) {
         employeeService.updateEmployeePositions(currentPosition, newPosition);
         return ResponseEntity.ok("Employees' positions updated successfully.");
+    }
+
+    //Build getemployee REST API. map incominb http request to this method
+    //need to pass uri template name (id) to the method argument (employeeid) becuase those are 2 different names
+    @GetMapping("/all-projects/{id}")
+    public ResponseEntity<List<Map<String, Object>>> getMembersProjectsAndRoles(@PathVariable("id") long employeeId){
+        List<Map<String, Object>> allProjectsAndRoles= employeeService.retrieveAllProjectsAndCorrespRoles(employeeId);
+        return ResponseEntity.ok(allProjectsAndRoles);
     }
 }

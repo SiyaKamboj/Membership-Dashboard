@@ -1,4 +1,4 @@
-package net.javaguides.ems.controller;
+package net.javaguides.ems.controller.forenums;
 
 import net.javaguides.ems.enums.Positions;
 import org.springframework.web.bind.annotation.CrossOrigin;

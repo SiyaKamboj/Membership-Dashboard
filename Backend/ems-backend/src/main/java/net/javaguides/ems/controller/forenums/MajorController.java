@@ -1,7 +1,6 @@
-package net.javaguides.ems.controller;
+package net.javaguides.ems.controller.forenums;
 
 import net.javaguides.ems.enums.MajorCodes;
-import net.javaguides.ems.enums.ProjectType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,13 +12,14 @@ import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/projecttypes")
-public class ProjectTypeController {
+@RequestMapping("/api/majors")
+public class MajorController {
+
     @GetMapping()
-    public List<String> getProjectTypes() {
-        // Convert the enum values to a list of strings
-        return Arrays.stream(ProjectType.values())
-                .map(ProjectType::name) // Retrieve the enum name (ie AS, Collab, etc)
+    public List<String> getMajors() {
+        // Convert the enum values to a list of codes (e.g., "AT25", "AN27", etc.)
+        return Arrays.stream(MajorCodes.values())
+                .map(MajorCodes::name) // Retrieve the enum name (i.e., the code)
                 .collect(Collectors.toList());
     }
 }
