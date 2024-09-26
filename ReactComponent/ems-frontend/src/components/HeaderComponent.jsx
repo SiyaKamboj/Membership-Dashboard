@@ -1,27 +1,28 @@
-import React from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom';
+import './HeaderComponent.css'; // Assuming you add custom styles in a CSS file
 
 const HeaderComponent = () => {
   return (
     <div>
-      {/*
-        <nav className="navbar navbar-dark bg-dark" >
-            <a className='navbar-brand'> TTV Member Management System</a>
-        </nav>*/}
       <header>
-        <nav className="navbar navbar-dark bg-dark" >
-          <ul>
-            <li>
-              <Link to="/employees">Members</Link>
+        <nav className="navbar navbar-dark bg-dark">
+          <ul className="nav nav-tabs">
+            <li className="nav-item">
+              <Link to="/employees" className="nav-link">
+                Members
+              </Link>
             </li>
-            <li>
-              <Link to="/projects">Projects</Link>
+            <li className="nav-item">
+              <Link to="/projects" className="nav-link">
+                Projects
+              </Link>
             </li>
           </ul>
         </nav>
       </header>
     </div>
-  )
-}
+  );
+};
 
-export default HeaderComponent
+export default HeaderComponent;

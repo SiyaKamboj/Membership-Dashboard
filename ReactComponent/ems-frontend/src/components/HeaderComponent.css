@@ -1,0 +1,28 @@
+.nav-tabs {
+    display: flex;
+    justify-content: center; /* Center the tabs */
+    padding: 0;
+  }
+  
+  .nav-item {
+    list-style: none;
+  }
+  
+  .nav-link {
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: 1px solid transparent;
+  }
+  
+  .nav-link:hover {
+    background-color: #343a40;
+    border-color: #007bff; /* Highlight color on hover */
+  }
+  
+  .nav-link.active {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+  }
+  

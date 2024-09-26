@@ -13,7 +13,23 @@ It was built using Java, Springboot, SQL, and React.JS.
 
 Now, the project should be available on localhost:3000/employees. Note, there is no need to run mysql in the background; however, if you do want to, open terminal -> mysql -u root
 
-## Version 5 (Current Version)
+## Version 6 (Current Version)
+### Pros
+* Fixed minor bug: When updating members and roles attached to a specific project, if you don't fill in both the member and the role for every single row, then no rows are saved into the database. Now, it doesn't let the user add a new row unless the previous rows have role and member filled in AND when submitted, it filters through all rows and only saves the ones where both role and member are filled in.
+* Added and, subsequently, commented out some code for deploying on AWS in applications.properties
+* Made navbar look less ugly
+### Cons
+* Some UI/UX changes:
+- Increase space between Members and Projects in navbar
+- Add more back-buttons, especially when updating or adding a member or project
+- When you add members to a project, (1) Gray out member name until member role is selected & (2) For incomplete or invalid fields, highlight it in red
+- The color scheme for both projects and members is the same, which might be confusing
+### Future Work
+* Add in a column for what the member's specialty is (ie DP, Directing, Editing, etc) & allow users to filter by specialty (generally, allow users to filter by different categories rather than just position)
+* Create user accounts to ensure only admin can alter users, but anyone can view projects/users
+* Deploy this on AWS for public consumption
+
+## Version 5 
 ### Pros
 * Created new table called projectEmployee where one column links to a project, one column links to member, and one column is an ENUM of role on set (ie Director, DP, AD, etc).
 - If you navigate to "view a user", then there is a list of projects that the user has worked on and the user's corresponding role/position on it.

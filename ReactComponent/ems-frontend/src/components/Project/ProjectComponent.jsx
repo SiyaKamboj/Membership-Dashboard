@@ -14,6 +14,7 @@ const ProjectComponent = () => {
     const [members, setMembers] = useState([]);
     const [filmPositions, setFilmPositions] = useState([]);
     const [projectMembers, setProjectMembers] = useState([{ role: '', memberId: '' }]); // Rows for members
+    const [failedToAddRow, setFailedToAddRowMessage] = useState('');
 
     const handleTitle = (e) => setTitle(e.target.value);
     const handleDescription = (e) => setDescription(e.target.value);
@@ -71,24 +72,32 @@ const ProjectComponent = () => {
 
 
     const handleSubmit = (projectId) => {
-        //const projectId = id; // Assuming `id` is your current project ID
-        // Map frontend data to backend format
-        const backendData = projectMembers.map((projectMember) => ({
-            member: { id: projectMember.memberid },
-            project: { id: projectId },
-            role: projectMember.role
-        }));
-
+        // Filter out projectMembers where either role or memberId is undefined or empty
+        const backendData = projectMembers
+            .filter((projectMember) => projectMember.role && projectMember.memberid)  // Filter out invalid entries
+            .map((projectMember) => ({
+                member: { id: projectMember.memberid },
+                project: { id: projectId },
+                role: projectMember.role,
+            }));
+    
+        if (backendData.length === 0) {
+            console.error('No valid project members to submit.');
+            return; // Exit early if there's nothing valid to submit
+        }
+    
         // Call the backend to update project members
-        updateAllMembersAndRolesOfAProject(projectId, backendData).then(() => {
-            console.log('Project members updated successfully!');
-            //navigator('/projects/view-project/'+id);
-        }).catch(error => {
-            console.log(backendData);
-            console.error('Error updating project members:', error);
-        });
+        updateAllMembersAndRolesOfAProject(projectId, backendData)
+            .then(() => {
+                console.log('Project members updated successfully!');
+                //navigator('/projects/view-project/'+id);
+            })
+            .catch((error) => {
+                console.log(backendData);
+                console.error('Error updating project members:', error);
+            });
     };
-
+    
     //should support both addand update employee methods
     function saveOrUpdateProject(e){
         //prevent default activities that happen when submitting form
@@ -183,7 +192,16 @@ const ProjectComponent = () => {
     }
 
     const handleAddRow = () => {
-        setProjectMembers([...projectMembers, { role: '', memberid: '' }]);
+        //only let them add another row if the row above is a valid row (aka has both role and member filled out)
+        const backendData = projectMembers.filter((projectMember) => !projectMember.role || !projectMember.memberid)
+        if (backendData.length>0){
+            console.log("Cannot add one more row; please complete current row");
+            setFailedToAddRowMessage("Cannot add a row. Please ensure you have filled out role and member for the previous row.");
+        }
+        else{
+            setProjectMembers([...projectMembers, { role: '', memberid: '' }]);
+            setFailedToAddRowMessage("");
+        }
         //setProjectMembers([...projectMembers, { role: '', memberId: '' }]);
         //setProjectMembers([...projectMembers, { role: '', firstname: '' }]);
     };
@@ -319,7 +337,9 @@ const ProjectComponent = () => {
                                     ))}
                                 </tbody>
                             </table>
+                            {failedToAddRow && <div style={{ color: 'red' }}>{failedToAddRow}</div>}
                             <button type="button" onClick={handleAddRow}>Add Member</button>
+
                             {/*<button type="button" onClick={handleSubmit}>Submit Changes</button>*/}
                         </div>
 
