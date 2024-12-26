@@ -36,7 +36,7 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private MajorCodes major;
 
-    //make it optional and unique
+    //make it not optional and unique
     @Column(name="email_id", nullable=false, unique=true)
     private String email;
 

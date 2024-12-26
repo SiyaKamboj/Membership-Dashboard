@@ -11,9 +11,32 @@ It was built using Java, Springboot, SQL, and React.JS.
 * npm install
 * npm run dev
 
-Now, the project should be available on localhost:3000/employees. Note, there is no need to run mysql in the background; however, if you do want to, open terminal -> mysql -u root
+Now, the project should be available on localhost:3000/employees. 
+Note, the project used to use a mysql database. Back then, there was no need to run mysql in the background; however, if you do want to, open terminal -> mysql -u root
+Now, the project uses a postgresql database. This is how you connect to it on the terminal: 
+* `psql postgres` OR `psql -d membership_dashboard` - If using the second command, skip to the `\dt` commands
+* `brew services start postgresql@15` - I'm not fully sure if this is needed
+* `\l` - reveals info about all DB's
+* `\c membership_dashboard` - Use one specific database
+* `\dt` or `\d employees` - Retrieve either info about all tables or info about a specific table (ie employees)
+* `\?` - View all possible commands in psql
 
-## Version 6 (Current Version)
+## Version 7 (Current Version)
+### Pros
+* Connected to postgresql instance and adjusted calls in the repository in backend
+### Cons
+* Still need to deploy for public usage on a free platform. Therefore, AWS, GCP, Azure will not work. 
+* Some UI/UX changes:
+- Increase space between Members and Projects in navbar
+- Add more back-buttons, especially when updating or adding a member or project
+- When you add members to a project, (1) Gray out member name until member role is selected & (2) For incomplete or invalid fields, highlight it in red
+- The color scheme for both projects and members is the same, which might be confusing
+### Future Work
+* Add in a column for what the member's specialty is (ie DP, Directing, Editing, etc) & allow users to filter by specialty (generally, allow users to filter by different categories rather than just position)
+* Create user accounts to ensure only admin can alter users, but anyone can view projects/users
+* Deploy this on railway (backend and database) & vercel (front-end) for public consumption, as their free tier will accomodate my usage and allow for CI/CD deployment. 
+
+## Version 6 
 ### Pros
 * Fixed minor bug: When updating members and roles attached to a specific project, if you don't fill in both the member and the role for every single row, then no rows are saved into the database. Now, it doesn't let the user add a new row unless the previous rows have role and member filled in AND when submitted, it filters through all rows and only saves the ones where both role and member are filled in.
 * Added and, subsequently, commented out some code for deploying on AWS in applications.properties
