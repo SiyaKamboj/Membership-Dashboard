@@ -11,6 +11,7 @@ public enum MajorCodes {
     AN28("Anthropology (Concentration in Sociocultural Anthropology)"),
     AN30("Anthropology with a Concentration in Climate Change and Human Solutions"),
     AN29("Biological Anthropology"),
+    AN31("Environmental Anthropology"),
 
     // Bioengineering
     BE25("Bioengineering"),
@@ -27,6 +28,8 @@ public enum MajorCodes {
     BI37("Molecular and Cell Biology"),
     BI38("Neurobiology"),
     BI29("Biochemistry and Cell Biology"),
+    BI33("Molecular Biology"),
+    BI36("Physiology and Neuroscience"),
 
     // Black Diaspora and African American Studies
     AA25("Black Diaspora and African American Studies"),
@@ -44,6 +47,9 @@ public enum MajorCodes {
     // Chinese Studies
     CN25("Chinese Studies"),
 
+    // Cinematic Arts
+    CI25("Cinematic Arts"),
+
     // Classical Studies
     CL25("Classical Studies"),
 
@@ -58,6 +64,7 @@ public enum MajorCodes {
 
     // Communication
     CM26("Communication"),
+    CM28("Media Industries and Communication"),
 
     // Computer Science and Engineering
     CS25("Computer Engineering"),
@@ -72,8 +79,9 @@ public enum MajorCodes {
 
     // Economics
     EN30("Business Economics"),
-    EN25("Economics"),
-    EN29("Economics-Public Policy (B.A./MPP only)"),
+    EN25("Economics (B.A.)"),
+    EN31("Economics (B.S.)"),
+    EN29("Economics-Public Policy"),
     EN28("Joint Major in Mathematics and Economics"),
 
     // Education Studies
@@ -164,35 +172,14 @@ public enum MajorCodes {
     LN25("Linguistics"),
     LN32("Linguistics (Specialization in Cognition and Language)"),
     LN29("Linguistics (Specialization in Language and Society)"),
-    LN34("Linguistics (Specialization in Speech and Language Sciences)"),
+    LN34("Linguistics (Specialization in Speech and Language Sciences"),
 
-    // Literature
-    LT42("Literary Arts"),
-    LT36("Literatures in English"),
-    LT33("Spanish Literature"),
-    LT41("World Literature and Culture"),
-
-    // Mathematics
-    MA33("Joint Major Mathematics & Economics"),
-    MA36("Mathematical Biology"),
-    MA29("Mathematics"),
-    MA27("Mathematics (Applied)"),
-    MA31("Mathematics — Applied Science"),
-    MA30("Mathematics — Computer Science"),
-    MA32("Mathematics — Secondary Education"),
-    MA35("Probability & Statistics"),
-
-    // Mechanical and Aerospace Engineering
-    MC25("Aerospace Engineering"),
-    MC37("Aerospace Engineering with a Specialization in Aerothermodynamics"),
-    MC36("Aerospace Engineering with a Specialization in Astrodynamics and Space Applications"),
-    MC35("Aerospace Engineering with a Specialization in Flight Dynamics and Controls"),
-    MC27("Mechanical Engineering"),
-    MC34("Mechanical Engineering with a Specialization in Controls and Robotics"),
-    MC33("Mechanical Engineering with a Specialization in Fluid Mechanics and Thermal Systems"),
-    MC32("Mechanical Engineering with a Specialization in Materials Science and Engineering"),
-    MC31("Mechanical Engineering with a Specialization in Mechanics of Materials"),
-    MC30("Mechanical Engineering with a Specialization in Renewable Energy and Environmental Flows"),
+    // Visual Arts
+    VA29("Interdisciplinary Computing and the Arts"),
+    VA26("Visual Arts (Art History/ Criticism)"),
+    VA27("Visual Arts (Media)"),
+    VA28("Visual Arts (Studio)"),
+    VA30("Speculative Design"),
 
     //if I somehow missed it
     Other("Other");
